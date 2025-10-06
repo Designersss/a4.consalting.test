@@ -1,16 +1,24 @@
 @import "tailwindcss";
 
-@theme {
-    --color-background-green: #1D5B43;
-    --color-default-color-accent: #FDB056;
-}
-
 :root {
     --background: #232829;
     --color-white: #ffffff;
     --background-green: #1D5B43;
     --default-color-accent: #FDB056;
+    --timer-color-text: #FFBB00;
+    --prev-price-card: #919191;
+    --card-bg: #313637;
 }
+
+@theme {
+    --color-background-green: var(--background-green);
+    --color-default-color-accent: var(--default-color-accent);
+    --color-timer-color-text: var(--timer-color-text);
+    --color-prev-price-card: var(--prev-price-card);
+    --color-card-bg: var(--card-bg);
+}
+
+
 
 body {
     background: var(--background);
