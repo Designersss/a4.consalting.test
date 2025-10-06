@@ -8,6 +8,8 @@
     --timer-color-text: #FFBB00;
     --prev-price-card: #919191;
     --card-bg: #313637;
+    --underline: #CDCDCD;
+    --border-line: #484D4E;
 }
 
 @theme {
@@ -16,6 +18,8 @@
     --color-timer-color-text: var(--timer-color-text);
     --color-prev-price-card: var(--prev-price-card);
     --color-card-bg: var(--card-bg);
+    --color-underline: var(--underline);
+    --color-border-line: var(--border-line);
 }
 
 
@@ -31,3 +35,29 @@ body {
     padding: 0 16px;
     margin: 0 auto;
 }
+
+.custom-checkbox-send {
+    position: relative;
+    width: 100%;
+    height: 32px;
+    max-width: 32px;
+    border: 1px solid #424748;
+    margin-right: 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.custom-checkbox-send::before {
+    content: url("../../public/svg/icon-checked.svg");
+    position: absolute;
+    display: none;
+    top: 50%;
+    left: 50%;
+    transform: translate(-46%, -43%);
+}
+
+.checkbox-send{
+    display: none;
+}
+
+.checkbox-send:checked ~ .custom-checkbox-send::before { display: block; }
