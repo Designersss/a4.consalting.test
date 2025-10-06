@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+@theme {
+    --color-background-green: #1D5B43;
+    --color-default-color-accent: #FDB056;
+}
+
+:root {
+    --background: #232829;
+    --color-white: #ffffff;
+    --background-green: #1D5B43;
+    --default-color-accent: #FDB056;
+}
+
+body {
+    background: var(--background);
+    color: var(--color-white);
+}
+
+.main-container {
+    width: 100%;
+    max-width: 1248px;
+    padding: 0 16px;
+    margin: 0 auto;
+}
