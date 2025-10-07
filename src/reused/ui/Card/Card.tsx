@@ -1,6 +1,7 @@
-import React, {Dispatch, SetStateAction, useEffect} from 'react';
+import React, {Dispatch, SetStateAction, useEffect, useState} from 'react';
 import clsx from "clsx";
 import {ITarifs} from "@/types/tarifs.types";
+import {useTimerStore} from "@/store/timerStore";
 
 type ViewTypeForCard = "large" | "small"
 
@@ -14,11 +15,24 @@ interface CardProps {
 }
 
 const Card = ({ view, id, isSelected = false, onSelect, card, setIdxBest }: CardProps) => {
+    const timerValue = useTimerStore((state) => state.timerValue);
     const discountPercentage = Math.round(((card.full_price - card.price) / card.full_price) * 100);
+
+    const [isStartNone, setIsStartNone] = useState(false);
+    const [isNone, setIsNone] = useState(false);
+
     useEffect(() => {
         card.is_best && setIdxBest(id)
     }, [])
-
+    useEffect(() => {
+        console.log(timerValue)
+        if(timerValue !== 0 && timerValue <= 50){
+            setIsStartNone(true)
+        }
+        if(timerValue && timerValue === 47){
+            setIsNone(true)
+        }
+    }, [timerValue]);
     return (
         <div
             className={clsx(
@@ -30,14 +44,14 @@ const Card = ({ view, id, isSelected = false, onSelect, card, setIdxBest }: Card
             )}
             onClick={onSelect}
         >
-            <div className={clsx("absolute top-0 left-[50px] text-[22px] font-medium bg-[#FD5656] px-2 py-[5px] rounded-b-lg", "max-xl:left-auto", view === "large" ? "max-xl:right-[60px]" : "max-xl:right-[30px]", "max-sm:text-base max-sm:py-[3px] max-sm:px-[6px]")}>-{discountPercentage}%</div>
-            {view === "large" && <div className={clsx("absolute top-[10px] right-[20px] text-[22px] font-medium text-default-color-accent", "max-xl:right-[14px] max-sm:top-[6px] max-sm:text-base")}>хит!</div>}
+            <div className={clsx("absolute top-0 left-[50px] text-[22px] font-medium bg-[#FD5656] px-2 transition py-[5px] rounded-b-lg", "max-xl:left-auto", view === "large" ? "max-xl:right-[60px]" : "max-xl:right-[30px]", "max-sm:text-base max-sm:py-[3px] max-sm:px-[6px]", isStartNone && "animate-pulse", isNone && "hidden")}>-{discountPercentage}%</div>
+            {view === "large" && <div className={clsx("absolute top-[10px] right-[20px] text-[22px] font-medium text-default-color-accent", "max-xl:right-[14px] max-sm:top-[6px] max-sm:text-base", isNone && "hidden")}>хит!</div>}
             <div className={clsx("flex gap-10 items-center justify-end", view !== "large" && "flex-col", "max-lg:flex-row max-lg:justify-center")}>
                 <div className={"flex flex-col items-center"}>
                     <span className="text-[26px] font-medium leading-[31px] max-sm:text-[18px]">{card.period}</span>
-                    <div className={clsx("flex flex-col items-end", view === "large" ? "mt-4" : "mt-[30px]", "max-sm:mt-4")}>
-                        <div className={clsx("text-[50px] font-semibold leading-[50px]", view === "large" && "text-default-color-accent", "max-xl:text-[34px]  max-sm:leading-[34px]")}>{card.price}</div>
-                        <div className="text-prev-price-card line-through text-[24px] leading-[29px] max-sm:text-base max-sm:-mt-2">{card.full_price}</div>
+                    <div className={clsx("flex flex-col items-end transition", view === "large" ? "mt-4" : "mt-[30px]", "max-sm:mt-4", isNone && "!mt-0")}>
+                        <div className={clsx("text-[50px] font-semibold leading-[50px] transition", view === "large" && "text-default-color-accent", "max-xl:text-[34px]  max-sm:leading-[34px]", isStartNone && "animate-pulse", isNone && "hidden")}>{card.price} ₽</div>
+                        <div className={clsx("text-prev-price-card transition-[1s] line-through text-[24px] leading-[29px] max-sm:text-base max-sm:-mt-2", isNone && "!text-[30px] !mt-0 !no-underline !text-default-color-accent font-bold")}>{card.full_price} ₽</div>
                     </div>
                 </div>
                 <div className={clsx("flex text-[16px] max-w-[328px]", view !== "large" && "mb-[23px] max-w-[204px]", "max-lg:mb-[0px] max-lg:max-w-[120px] max-sm:line-clamp-2")}>{card.text}</div>

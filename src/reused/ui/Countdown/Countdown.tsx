@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import {StarSvg} from "@/reused/svg/StarSvg";
 import clsx from "clsx";
+import {useTimerStore} from "@/store/timerStore";
 
 interface CountdownProps {
     initialMinutes?: number;
@@ -11,6 +12,7 @@ interface CountdownProps {
 const Countdown = ({ initialMinutes = 1 }: CountdownProps) => {
     const [timeLeft, setTimeLeft] = useState(initialMinutes * 60);
     const [isBlinking, setIsBlinking] = useState(false);
+    const setTimerValue = useTimerStore((state) => state.setTimerValue);
 
     useEffect(() => {
         if (timeLeft <= 0) return;
@@ -27,6 +29,10 @@ const Countdown = ({ initialMinutes = 1 }: CountdownProps) => {
 
         return () => clearInterval(timerId);
     }, [timeLeft]);
+
+    useEffect(() => {
+        setTimerValue(timeLeft);
+    }, [timeLeft, setTimerValue]);
 
     useEffect(() => {
         setIsBlinking(timeLeft <= 30 && timeLeft > 0);
