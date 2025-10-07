@@ -61,3 +61,11 @@ body {
 }
 
 .checkbox-send:checked ~ .custom-checkbox-send::before { display: block; }
+
+
+@media (max-width: 640px) {
+    .custom-checkbox-send{
+        max-width: 30px;
+        height: 30px;
+    }
+}
