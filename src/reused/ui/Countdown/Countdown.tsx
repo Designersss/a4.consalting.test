@@ -9,7 +9,7 @@ interface CountdownProps {
     initialMinutes?: number;
 }
 
-const Countdown = ({ initialMinutes = 1 }: CountdownProps) => {
+const Countdown = ({ initialMinutes = 2 }: CountdownProps) => {
     const [timeLeft, setTimeLeft] = useState(initialMinutes * 60);
     const [isBlinking, setIsBlinking] = useState(false);
     const setTimerValue = useTimerStore((state) => state.setTimerValue);

@@ -26,10 +26,10 @@ const Card = ({ view, id, isSelected = false, onSelect, card, setIdxBest }: Card
     }, [])
     useEffect(() => {
         console.log(timerValue)
-        if(timerValue !== 0 && timerValue <= 50){
+        if(timerValue !== 0 && timerValue <= 30){
             setIsStartNone(true)
         }
-        if(timerValue && timerValue === 47){
+        if(timerValue && timerValue <= 1){
             setIsNone(true)
         }
     }, [timerValue]);
